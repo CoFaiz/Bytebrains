@@ -10,19 +10,6 @@ import pandas as pd
 import numpy as np
 import plotly.express as px
 
-import seaborn as sns
-import matplotlib.pyplot as plt
-
-#Importing For Modeling
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, roc_auc_score
-from xgboost import XGBClassifier
-import lightgbm as lgb
-from catboost import CatBoostClassifier
-
 # Importing Dash Components
 from dash import Dash, html, dcc, Input, Output, dash_table
 import dash_bootstrap_components as dbc
@@ -32,29 +19,67 @@ used_color = ["#ADA2FF", "#C0DEFF", "#FCDDB0", "#FF9F9F", "#EDD2F3", "#98EECC", 
 df = pd.read_csv("dataset_final_bytebrains_stage2.csv")
 df.head()
 
-# Ubah semua nilai boolean menjadi integer (0 dan 1)
-df = df.astype(int)
+# -------------- Start The Dash App ------------------ #
+app = Dash(__name__, external_stylesheets=[dbc.themes.CERULEAN])
 
-# Hitung distribusi target Attrition
-attrition_counts = df["Attrition"].value_counts()
-total = attrition_counts.sum()
+# To render on web app
+server = app.server
 
-# Hitung persentase
-attrition_percentages = (attrition_counts / total) * 100
+# Pages Navigator
+pages_dict = {
+    "Home": "/",
+    "Departments": "/Departments",
+    "Locations": "/Locations",
+    "Performance": "/Performance",
+}
 
-# Visualisasi dengan persentase
-plt.figure(figsize=(6,4))
-ax = sns.barplot(x=attrition_percentages.index, y=attrition_percentages.values, palette="viridis")
+# Sidebar Style
+sidebar_style = {
+    "position": "fixed",
+    "width": "16rem",
+    "height": "100vh",
+    "top": "0",
+    "bottom": "0",
+    "left": "0",
+    "padding": "15px",
+    "background-color": "#111",
+    "border-right": "2px solid #5FBDFF"
+}
 
-# Menambahkan label persentase di atas setiap bar
-for p in ax.patches:
-    ax.annotate(f"{p.get_height():.2f}%",
-                (p.get_x() + p.get_width() / 2, p.get_height()),
-                ha="center", va="bottom", fontsize=12, fontweight="bold")
-plt.xlabel("Attrition (0 = Tidak, 1 = Ya)")
-plt.ylabel("Persentase (%)")
-plt.title("Distribusi Persentase Attrition")
-plt.ylim(0, 100)  # Set batas maksimal 100%
-plt.show()
+# Page Content Style
+content_style = {
+    "margin-left": "16rem",
+    "margin-right": "0rem",
+    "padding": "15px",
+    "height": "100%",
+}
+
+# DropDown Filter Style
+filter_style = {
+    "border-width": "0px",
+    "font-family": "arial",
+    "margin-bottom": "25px",
+    "background-color": "#222",
+}
+
+def get_alert(year_value, department_value):
+    return dbc.Alert(
+        [
+            html.H2("Warning", style={"font": "bold 30px arial"}),
+            html.P(
+                f"The Department {department_value} Did Not Exist In {year_value} !!😔😔",
+                style={"font": "bold 22px arial"}
+            ),
+            html.Hr(),
+            html.P(
+                "Choose Another Department",
+                style={"font": "bold 20px arial"},
+                className="mb-0",
+            ),
+        ], color="danger",
+        style={"box-shadow": "none", "text-shdow": "none"}
+    )
+
+
 
 
