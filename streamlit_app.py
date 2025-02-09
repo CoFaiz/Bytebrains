@@ -12,7 +12,6 @@ import plotly.express as px
 
 import seaborn as sns
 import matplotlib.pyplot as plt
-%matplotlib inline
 
 #Importing For Modeling
 from sklearn.model_selection import train_test_split
