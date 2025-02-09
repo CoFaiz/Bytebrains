@@ -1,1 +1,7 @@
 streamlit>=1.26.0
+dash==2.14.1
+numpy
+pandas
+plotly
+dash_bootstrap_components
+gunicorn
