@@ -5,3 +5,14 @@ pandas
 plotly
 dash_bootstrap_components
 gunicorn
+
+seaborn
+matplotlib.pyplot
+sklearn.model_selection
+sklearn.preprocessing
+sklearn.tree
+sklearn.ensemble
+sklearn.metrics
+xgboost
+lightgbm
+catboost 
