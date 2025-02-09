@@ -1,6 +1,6 @@
-# 📦 Streamlit App Starter Kit 
+# 📦 Attrition Prediction
 ```
-⬆️ (Replace above with your app's name)
+⬆️ Bytebrains
 ```
 
 Description of the app ...
