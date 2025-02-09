@@ -1,5 +1,7 @@
 # Import Streamlit
 import streamlit as st
+import numpy as np
+import pandas as pd
 
 #Header
 st.title('🎈 Attrition Prediction')
